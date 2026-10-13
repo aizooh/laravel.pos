@@ -67,16 +67,16 @@
     <div class="card">
         <h3 class="m-0">Payment Methods — Today</h3>
 
-        <div class="grid grid-3 grid-tight">
-            @foreach (['cash' => 'Cash', 'mpesa' => 'M-PESA', 'card' => 'Card'] as $key => $label)
-                <div class="stat-box">
-                    <div class="stat-label">{{ $label }}</div>
-                    <div class="stat-value">
-                        KSh {{ number_format((float) ($paymentBreakdown[$key] ?? 0), 2) }}
-                    </div>
-                </div>
-            @endforeach
+        <div class="grid grid-2 grid-tight">
+    @foreach (['cash' => 'Cash', 'mpesa' => 'M-PESA'] as $key => $label)
+        <div class="stat-box">
+            <div class="stat-label">{{ $label }}</div>
+            <div class="stat-value">
+                KSh {{ number_format((float) ($paymentBreakdown[$key] ?? 0), 2) }}
+            </div>
         </div>
+    @endforeach
+</div>
     </div>
 
     {{-- ---------- Low stock ---------- --}}

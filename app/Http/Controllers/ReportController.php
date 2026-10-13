@@ -46,7 +46,7 @@ class ReportController extends Controller
         $payments = [
             'cash'  => (float) $sales->where('payment_method', 'cash')->sum('total'),
             'mpesa' => (float) $sales->where('payment_method', 'mpesa')->sum('total'),
-            'card'  => (float) $sales->where('payment_method', 'card')->sum('total'),
+            
         ];
 
         // COGS (products only, from snapshot)

@@ -151,7 +151,7 @@ if ($data['type'] === 'product') {
     public function checkout(Request $request)
 {
     $data = $request->validate([
-        'payment_method'  => 'required|in:cash,mpesa,card',
+        'payment_method'  => 'required|in:cash,mpesa',
         'mpesa_reference' => 'nullable|string|max:50',
     ]);
 

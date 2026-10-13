@@ -48,11 +48,10 @@
 
 <div class="card">
     <h3 style="margin-top:0;">Payment Methods</h3>
-    <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:1rem;">
-        <div class="pay-box"><div class="muted">Cash</div><div class="pay-amount">KSh {{ number_format($payments['cash'], 2) }}</div></div>
-        <div class="pay-box"><div class="muted">M-PESA</div><div class="pay-amount">KSh {{ number_format($payments['mpesa'], 2) }}</div></div>
-        <div class="pay-box"><div class="muted">Card</div><div class="pay-amount">KSh {{ number_format($payments['card'], 2) }}</div></div>
-    </div>
+    <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:1rem;">
+    <div class="pay-box"><div class="muted">Cash</div><div class="pay-amount">KSh {{ number_format($payments['cash'], 2) }}</div></div>
+    <div class="pay-box"><div class="muted">M-PESA</div><div class="pay-amount">KSh {{ number_format($payments['mpesa'], 2) }}</div></div>
+</div>
 </div>
 
 {{-- Daily sales series --}}

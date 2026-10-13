@@ -19,11 +19,10 @@
         <div class="field" style="margin:0;">
             <label>Payment</label>
             <select name="method">
-                <option value="">Any</option>
-                <option value="cash"  {{ request('method') === 'cash'  ? 'selected' : '' }}>Cash</option>
-                <option value="mpesa" {{ request('method') === 'mpesa' ? 'selected' : '' }}>M-PESA</option>
-                <option value="card"  {{ request('method') === 'card'  ? 'selected' : '' }}>Card</option>
-            </select>
+    <option value="">Any</option>
+    <option value="cash"  {{ request('method') === 'cash'  ? 'selected' : '' }}>Cash</option>
+    <option value="mpesa" {{ request('method') === 'mpesa' ? 'selected' : '' }}>M-PESA</option>
+</select>
         </div>
 
         {{-- Show voided toggle --}}

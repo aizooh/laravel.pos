@@ -88,10 +88,9 @@
             <div class="field">
                 <label>Payment Method</label>
                 <div class="pay-options">
-                    <label class="pay-opt"><input type="radio" name="payment_method" value="cash" checked> Cash</label>
-                    <label class="pay-opt"><input type="radio" name="payment_method" value="mpesa"> M-PESA</label>
-                    <label class="pay-opt"><input type="radio" name="payment_method" value="card"> Card</label>
-                </div>
+    <label class="pay-opt"><input type="radio" name="payment_method" value="cash" checked> Cash</label>
+    <label class="pay-opt"><input type="radio" name="payment_method" value="mpesa"> M-PESA</label>
+</div>
             </div>
 
             <div class="field" id="mpesa-field" style="display:none;">
@@ -268,7 +267,7 @@
         max-width: 420px;
         border: 1px solid #334155;
     }
-    .pay-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+    .pay-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
     .pay-opt {
         display: flex;
         align-items: center;
