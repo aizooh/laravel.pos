@@ -18,6 +18,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/password/change',  [\App\Http\Controllers\ChangePasswordController::class, 'show'])->name('password.change');
+Route::post('/password/change', [\App\Http\Controllers\ChangePasswordController::class, 'update'])->name('password.change.update');
 
     // POS
     Route::get('/pos', [\App\Http\Controllers\PosController::class, 'index'])->name('pos.index');

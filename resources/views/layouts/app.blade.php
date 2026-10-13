@@ -247,6 +247,80 @@
             main { padding: 0.5rem; }
             .card { padding: 0.85rem; border-radius: 8px; }
         }
+        /* ================================================================
+   GLOBAL MOBILE RESPONSIVE OVERRIDES
+   Fixes inline grid styles across all views without editing each one
+   ================================================================ */
+
+@media (max-width: 900px) {
+
+    /* Any inline 3- or 4-column grid → 2 columns on mobile */
+    main [style*="repeat(4"],
+    main [style*="repeat(3"] {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.6rem !important;
+    }
+
+    /* Any inline 2-column grid → 1 column */
+    main [style*="1fr 1fr 1fr"],
+    main [style*="1fr 1fr"]:not([style*="1fr 1fr 1fr"]) {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* KPI cards — smaller fonts, tighter padding */
+    .kpi { padding: 0.9rem !important; }
+    .kpi-value { font-size: 1.15rem !important; line-height: 1.2 !important; }
+    .kpi-label { font-size: 0.68rem !important; letter-spacing: 0.03em !important; }
+    .kpi-sub { font-size: 0.7rem !important; margin-top: 0.15rem !important; }
+
+    /* Payment breakdown boxes — full width */
+    .pay-box { padding: 0.75rem !important; }
+    .pay-amount { font-size: 1rem !important; }
+
+    /* Cards allow horizontal table scroll if needed */
+    .card { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+    /* Tables — tighter and scrollable */
+    table { font-size: 0.8rem !important; }
+    th, td { padding: 0.45rem 0.35rem !important; }
+
+    /* Modals fill more of the screen */
+    .modal-box {
+        max-width: calc(100vw - 1.5rem) !important;
+        padding: 1rem !important;
+    }
+
+    /* Report tiles - 4 cols → 2 cols */
+    div[style*="grid-template-columns: repeat(4"] {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 600px) {
+
+    /* All inline grids → single column */
+    main [style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+        gap: 0.5rem !important;
+    }
+
+    /* Even smaller KPI on tiny phones */
+    .kpi-value { font-size: 1rem !important; }
+    .kpi { padding: 0.7rem !important; }
+
+    /* Squeeze the header */
+    .header-inner { padding: 0.6rem 0.75rem !important; }
+    header h1 { font-size: 1rem !important; }
+
+    /* Cart rows tighten up */
+    .cart-row {
+        grid-template-columns: 1fr 55px auto auto !important;
+        gap: 0.35rem !important;
+    }
+
+    /* Section titles smaller */
+    .section-title { font-size: 0.85rem !important; }
+}
     </style>
 </head>
 <body>
@@ -273,7 +347,6 @@
                     <a href="{{ route('reports.index') }}"  class="{{ request()->routeIs('reports.*')  ? 'active' : '' }}">Reports</a>
                 @endif
 
-                <a href="{{ route('password.change') }}" class="{{ request()->routeIs('password.*') ? 'active' : '' }}">My Password</a>
 
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
