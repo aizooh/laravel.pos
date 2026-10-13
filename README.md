@@ -434,10 +434,3 @@ Use this when reconciling cash or investigating discrepancies.
 **System:** Mamicar POS
 **Live at:** `http://15.207.169.156`
 **Support:** Contact the admin/owner
-
----
-
-Want me to also:
-- **Save this as `docs/USER_MANUAL.md`** in the repo so it lives with the code?
-- **Generate a PDF version** for printing and pinning next to the POS?
-- **Add a short one-page "quick reference" card** for attendants?
