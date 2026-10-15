@@ -19,10 +19,10 @@
         <div class="field" style="margin:0;">
             <label>Payment</label>
             <select name="method">
-    <option value="">Any</option>
-    <option value="cash"  {{ request('method') === 'cash'  ? 'selected' : '' }}>Cash</option>
-    <option value="mpesa" {{ request('method') === 'mpesa' ? 'selected' : '' }}>M-PESA</option>
-</select>
+                <option value="">Any</option>
+                <option value="cash"  {{ request('method') === 'cash'  ? 'selected' : '' }}>Cash</option>
+                <option value="mpesa" {{ request('method') === 'mpesa' ? 'selected' : '' }}>M-PESA</option>
+            </select>
         </div>
 
         {{-- Show voided toggle --}}
@@ -34,7 +34,7 @@
             </label>
         </div>
 
-        <div style="grid-column: span 3; display:flex; gap:0.5rem;">
+        <div style="grid-column: 1 / -1; display:flex; gap:0.5rem; flex-wrap:wrap;">
             <button type="submit">Filter</button>
             <a href="{{ route('sales.index') }}" class="btn btn-secondary">Reset</a>
         </div>
@@ -45,75 +45,77 @@
         filtered total: <strong>KSh {{ number_format((float) $summary['total'], 2) }}</strong>
     </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Invoice</th>
-                <th>Date</th>
-                <th>By</th>
-                <th>Items</th>
-                <th>Payment</th>
-                <th>Total</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-        @forelse ($sales as $s)
-            <tr style="{{ $s->isVoided() ? 'opacity:0.65;' : '' }}">
-                <td>
-                    <strong style="{{ $s->isVoided() ? 'text-decoration: line-through;' : '' }}">{{ $s->invoice_no }}</strong>
+    <div class="table-wrap">
+        <table class="sales-table">
+            <thead>
+                <tr>
+                    <th>Invoice</th>
+                    <th>Date</th>
+                    <th class="hide-sm">By</th>
+                    <th class="hide-sm">Items</th>
+                    <th>Payment</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            @forelse ($sales as $s)
+                <tr style="{{ $s->isVoided() ? 'opacity:0.65;' : '' }}">
+                    <td>
+                        <strong style="{{ $s->isVoided() ? 'text-decoration: line-through;' : '' }}">{{ $s->invoice_no }}</strong>
 
-                    @if ($s->isVoided())
-                        <div style="margin-top:0.25rem;">
-                            <span class="badge badge-danger">VOIDED</span>
-                        </div>
-                        <div class="muted" style="font-size:0.75rem; margin-top:0.25rem;">
-                            by <strong>{{ $s->voidedBy->name ?? '—' }}</strong><br>
-                            {{ $s->voided_at?->format('d M Y H:i') }}
-                            @if ($s->void_reason)
-                                <div style="margin-top:0.15rem;">Reason: <em>{{ $s->void_reason }}</em></div>
-                            @endif
-                        </div>
-                    @endif
-                </td>
-                <td class="muted">{{ $s->created_at->format('d M Y H:i') }}</td>
-                <td>{{ $s->user->name ?? '—' }}</td>
-                <td class="muted">{{ $s->items_count }}</td>
-                <td>
-                    <span class="badge badge-muted">{{ strtoupper($s->payment_method) }}</span>
-                    @if ($s->mpesa_reference)
-                        <div class="muted" style="font-size:0.75rem;">{{ $s->mpesa_reference }}</div>
-                    @endif
-                </td>
-                <td>
-                    @if ($s->isVoided())
-                        <span style="text-decoration: line-through;">KSh {{ number_format((float) $s->total, 2) }}</span>
-                    @else
-                        <strong>KSh {{ number_format((float) $s->total, 2) }}</strong>
-                    @endif
-                </td>
-                <td style="white-space:nowrap;">
-                    <a href="{{ route('sales.receipt', $s) }}" class="btn btn-secondary btn-sm">Receipt</a>
-
-                    @if (auth()->user()->isAdmin())
                         @if ($s->isVoided())
-                            <button type="button" class="btn btn-sm unvoid-sale-btn"
-                                    style="background:#10b981; color:#fff;"
-                                    data-action="{{ route('sales.unvoid', $s) }}"
-                                    data-invoice="{{ $s->invoice_no }}">Unvoid</button>
-                        @else
-                            <button type="button" class="btn btn-danger btn-sm void-sale-btn"
-                                    data-action="{{ route('sales.void', $s) }}"
-                                    data-invoice="{{ $s->invoice_no }}">Void</button>
+                            <div style="margin-top:0.25rem;">
+                                <span class="badge badge-danger">VOIDED</span>
+                            </div>
+                            <div class="muted" style="font-size:0.75rem; margin-top:0.25rem;">
+                                by <strong>{{ $s->voidedBy->name ?? '—' }}</strong><br>
+                                {{ $s->voided_at?->format('d M Y H:i') }}
+                                @if ($s->void_reason)
+                                    <div style="margin-top:0.15rem;">Reason: <em>{{ $s->void_reason }}</em></div>
+                                @endif
+                            </div>
                         @endif
-                    @endif
-                </td>
-            </tr>
-        @empty
-            <tr><td colspan="7" class="muted" style="text-align:center; padding:2rem;">No sales yet.</td></tr>
-        @endforelse
-        </tbody>
-    </table>
+                    </td>
+                    <td class="muted">{{ $s->created_at->format('d M Y H:i') }}</td>
+                    <td class="hide-sm">{{ $s->user->name ?? '—' }}</td>
+                    <td class="muted hide-sm">{{ $s->items_count }}</td>
+                    <td>
+                        <span class="badge badge-muted">{{ strtoupper($s->payment_method) }}</span>
+                        @if ($s->mpesa_reference)
+                            <div class="muted" style="font-size:0.75rem;">{{ $s->mpesa_reference }}</div>
+                        @endif
+                    </td>
+                    <td>
+                        @if ($s->isVoided())
+                            <span style="text-decoration: line-through;">KSh {{ number_format((float) $s->total, 2) }}</span>
+                        @else
+                            <strong>KSh {{ number_format((float) $s->total, 2) }}</strong>
+                        @endif
+                    </td>
+                    <td class="actions-cell">
+                        <a href="{{ route('sales.receipt', $s) }}" class="btn btn-secondary btn-sm">Receipt</a>
+
+                        @if (auth()->user()->isAdmin())
+                            @if ($s->isVoided())
+                                <button type="button" class="btn btn-sm unvoid-sale-btn"
+                                        style="background:#10b981; color:#fff;"
+                                        data-action="{{ route('sales.unvoid', $s) }}"
+                                        data-invoice="{{ $s->invoice_no }}">Unvoid</button>
+                            @else
+                                <button type="button" class="btn btn-danger btn-sm void-sale-btn"
+                                        data-action="{{ route('sales.void', $s) }}"
+                                        data-invoice="{{ $s->invoice_no }}">Void</button>
+                            @endif
+                        @endif
+                    </td>
+                </tr>
+            @empty
+                <tr><td colspan="7" class="muted" style="text-align:center; padding:2rem;">No sales yet.</td></tr>
+            @endforelse
+            </tbody>
+        </table>
+    </div>
 
     <div style="margin-top:1rem;">{{ $sales->links() }}</div>
 </div>
@@ -173,6 +175,31 @@
     .modal-box {
         background:#1e293b; padding:1.5rem; border-radius:10px;
         width:100%; max-width:420px; border:1px solid #334155;
+    }
+
+    /* Horizontal scroll on narrow screens */
+    .table-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Sales table keeps a sane minimum width so columns aren't crushed */
+    .sales-table {
+        min-width: 780px;
+    }
+
+    /* Actions cell never collapses */
+    .actions-cell {
+        white-space: nowrap;
+        min-width: 160px;
+    }
+
+    /* Hide low-priority columns on small screens */
+    @media (max-width: 800px) {
+        .hide-sm { display: none; }
+
+        /* Once By and Items are hidden, we can drop the min-width */
+        .sales-table { min-width: 0; }
     }
 </style>
 
