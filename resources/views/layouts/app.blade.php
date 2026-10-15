@@ -247,12 +247,13 @@
             main { padding: 0.5rem; }
             .card { padding: 0.85rem; border-radius: 8px; }
         }
+        
         /* ================================================================
    GLOBAL MOBILE RESPONSIVE OVERRIDES
    Fixes inline grid styles across all views without editing each one
    ================================================================ */
 
-@media (max-width: 900px) {
+ @media (max-width: 900px) {
 
     /* Any inline 3- or 4-column grid → 2 columns on mobile */
     main [style*="repeat(4"],
@@ -321,6 +322,72 @@
     /* Section titles smaller */
     .section-title { font-size: 0.85rem !important; }
 }
+        /* ================================================================
+           Laravel pagination — constrain SVGs and make it look decent
+           ================================================================ */
+        nav[role="navigation"] {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            font-size: 0.85rem;
+        }
+
+        nav[role="navigation"] > div {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            flex-wrap: wrap;
+        }
+
+        nav[role="navigation"] svg {
+            width: 16px !important;
+            height: 16px !important;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        nav[role="navigation"] a,
+        nav[role="navigation"] span[aria-current="page"] > span,
+        nav[role="navigation"] span[aria-disabled="true"] > span {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 36px;
+            min-height: 36px;
+            padding: 0.35rem 0.6rem;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            background: #0f172a;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+
+        nav[role="navigation"] a:hover {
+            background: #334155;
+            color: #fff;
+        }
+
+        nav[role="navigation"] span[aria-current="page"] > span {
+            background: #38bdf8;
+            color: #0f172a;
+            border-color: #38bdf8;
+            font-weight: 700;
+        }
+
+        nav[role="navigation"] span[aria-disabled="true"] > span {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 700px) {
+            nav[role="navigation"] > div:first-child {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
